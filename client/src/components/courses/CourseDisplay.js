@@ -15,7 +15,6 @@ const CourseDisplay = ({ title, description, estimatedTime, materialsNeeded }) =
 
           <div className = "course--description">
             <p>{ description }</p>
-
           </div>
         </div>
 

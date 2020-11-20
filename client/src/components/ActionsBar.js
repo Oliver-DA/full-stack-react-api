@@ -1,22 +1,28 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 
-const ActionsBar = () => {
+const ActionsBar = ({ id }) => {
     return (
-      <div className="actions--bar">
-        <div className="bounds">
-          <div className="grid-100">
+      <div className = "actions--bar">
+        <div className = "bounds">
+
+          <div className = "grid-100">
+
             <span>
-              <a className="button" href="update-course.html">
+              <Link className = "button" to = { `/courses/${id}/update` }>
                 Update Course
-              </a>
-              <a className="button" href="#">
+              </Link>
+
+              <Link className = "button" to = { `/courses/${id}/delete` }>
                 Delete Course
-              </a>
+              </Link>
             </span>
-            <a className="button button-secondary" href="index.html">
+            <Link className = "button button-secondary" to = "/">
               Return to List
-            </a>
+            </Link>
+
           </div>
+
         </div>
       </div>
     );

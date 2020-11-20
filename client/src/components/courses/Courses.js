@@ -4,7 +4,7 @@ import axios from 'axios';
 //Components
 import CourseCard from './CourseCard';
 import CreateCourseButton from './CreateCourseButton';
-
+import Header from "../Header";
 
 const Courses = () => {
 
@@ -27,30 +27,16 @@ const Courses = () => {
 
     return (
       <>
-        <div>
-          <div className="header">
-            <div className="bounds">
-              <h1 className="header--logo">Courses</h1>
-              <nav>
-                <a className="signup" href="sign-up.html">
-                  Sign Up
-                </a>
-                <a className="signin" href="sign-in.html">
-                  Sign In
-                </a>
-              </nav>
-            </div>
-          </div>
-          <div className="bounds">
+        <Header />
 
-            { courses.map( (course, index) => (
-              <CourseCard
-              {...course}
-              key = {index}/>
-            )) }
+        <div className="bounds">
+          { courses.map( (course, index) => (
+            <CourseCard
+            {...course}
+            key = {index}/>
+          )) }
 
-            <CreateCourseButton />
-          </div>
+          <CreateCourseButton />
         </div>
       </>
     );

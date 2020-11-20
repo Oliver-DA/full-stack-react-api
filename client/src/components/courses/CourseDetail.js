@@ -1,9 +1,10 @@
-import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 //Components
-import ActionsBar from './ActionsBar';
+import ActionsBar from '../ActionsBar';
 import CourseDisplay from './CourseDisplay';
+import Header from '../Header';
 
 const CourseDetail = ({ match }) => {
   const { id } = match.params;
@@ -25,23 +26,9 @@ const CourseDetail = ({ match }) => {
 
     return (
       <>
-        <div className="header">
-          <div className="bounds">
-            <h1 className="header--logo">Courses</h1>
-            <nav>
-              <span>Welcome Joe Smith!</span>
-              <a className="signout" href="index.html">
-                Sign Out
-              </a>
-            </nav>
-          </div>
-        </div>
-        <div>
-
-          <ActionsBar />
-          <CourseDisplay {...course} />
-
-        </div>
+        <Header />
+        <ActionsBar id = {id} course = {course} />
+        <CourseDisplay {...course} />
       </>
     );
 }
