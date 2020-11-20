@@ -1,104 +1,130 @@
-import React from 'react';
+import React, { useState }from 'react';
 
-const CreateCourse = () => {
-    return (
-      <div>
-        <div className="header">
-          <div className="bounds">
-            <h1 className="header--logo">Courses</h1>
-            <nav>
-              <span>Welcome Joe Smith!</span>
-              <a className="signout" href="index.html">
-                Sign Out
-              </a>
-            </nav>
-          </div>
-        </div>
-        <div className="bounds course--detail">
-          <h1>Create Course</h1>
-          <div>
-            <div>
-              <h2 className="validation--errors--label">Validation errors</h2>
-              <div className="validation-errors">
-                <ul>
-                  <li>Please provide a value for "Title"</li>
-                  <li>Please provide a value for "Description"</li>
+//Components
+import Header from '../Header';
+
+const CreateCourse = ({ history }) => {
+
+  const [newCourse, setNewCourse] = useState({
+    title:"",
+    description:"",
+    estimatedTime:"",
+    materialsNeeded:""
+  })
+
+  //Handlers
+  const handleChange = e => {
+    setNewCourse({
+      ...newCourse,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleSubmit = e => {
+    e.preveventDefault();
+    alert("Form submited")
+    // axios.post("http://localhost:5000/courses")
+
+  };
+
+
+  const cancel = e => {
+    e.preveventDefault();
+    history.push("/");
+  }
+
+  return (
+    <div>
+      <Header />
+      <div className="bounds course--detail">
+        <h1>Create Course</h1>
+        <div>
+          {/* <div>
+            <h2 className="validation--errors--label">Validation errors</h2>
+            <div className="validation-errors">
+              <ul>
+                <li>Please provide a value for "Title"</li>
+                <li>Please provide a value for "Description"</li>
+              </ul>
+            </div>
+          </div> */}
+          <form onSubmit = {handleSubmit}>
+            <div className="grid-66">
+              <div className="course--header">
+                <h4 className="course--label">Course</h4>
+                <div>
+                  <input
+                    onChange = {handleChange}
+                    id="title"
+                    name="title"
+                    type="text"
+                    className="input-title course--title--input"
+                    placeholder="Course title..."
+                    value= {newCourse.title}
+                  />
+                </div>
+                <p>By Joe Smith</p>
+              </div>
+              <div className="course--description">
+                <div>
+                  <textarea
+                    onChange = {handleChange}
+                    id="description"
+                    name="description"
+                    className=""
+                    value = {newCourse.description}
+                    placeholder="Course description..."
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+            <div className="grid-25 grid-right">
+              <div className="course--stats">
+                <ul className="course--stats--list">
+                  <li className="course--stats--list--item">
+                    <h4>Estimated Time</h4>
+                    <div>
+                      <input
+                        onChange = {handleChange}
+                        id="estimatedTime"
+                        name="estimatedTime"
+                        type="text"
+                        className="course--time--input"
+                        placeholder="Hours"
+                        value= {newCourse.estimatedTime}
+                      />
+                    </div>
+                  </li>
+                  <li className="course--stats--list--item">
+                    <h4>Materials Needed</h4>
+                    <div>
+                      <textarea
+                        onChange = {handleChange}
+                        id="materialsNeeded"
+                        name="materialsNeeded"
+                        className=""
+                        placeholder="List materials..."
+                        value = {newCourse.materialsNeeded}
+                      ></textarea>
+                    </div>
+                  </li>
                 </ul>
               </div>
             </div>
-            <form>
-              <div className="grid-66">
-                <div className="course--header">
-                  <h4 className="course--label">Course</h4>
-                  <div>
-                    <input
-                      id="title"
-                      name="title"
-                      type="text"
-                      className="input-title course--title--input"
-                      placeholder="Course title..."
-                      value=""
-                    />
-                  </div>
-                  <p>By Joe Smith</p>
-                </div>
-                <div className="course--description">
-                  <div>
-                    <textarea
-                      id="description"
-                      name="description"
-                      className=""
-                      placeholder="Course description..."
-                    ></textarea>
-                  </div>
-                </div>
-              </div>
-              <div className="grid-25 grid-right">
-                <div className="course--stats">
-                  <ul className="course--stats--list">
-                    <li className="course--stats--list--item">
-                      <h4>Estimated Time</h4>
-                      <div>
-                        <input
-                          id="estimatedTime"
-                          name="estimatedTime"
-                          type="text"
-                          className="course--time--input"
-                          placeholder="Hours"
-                          value=""
-                        />
-                      </div>
-                    </li>
-                    <li className="course--stats--list--item">
-                      <h4>Materials Needed</h4>
-                      <div>
-                        <textarea
-                          id="materialsNeeded"
-                          name="materialsNeeded"
-                          className=""
-                          placeholder="List materials..."
-                        ></textarea>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className="grid-100 pad-bottom">
-                <button className="button" type="submit">
-                  Create Course
-                </button>
-                <button
-                  className="button button-secondary"
-                  onclick="event.preventDefault(); location.href='index.html';"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
+            <div className="grid-100 pad-bottom">
+              <button className="button" type="submit">
+                Create Course
+              </button>
+              <button
+              className="button button-secondary"
+              onClick = {cancel}>
+              Cancel</button>
+            </div>
+          </form>
         </div>
       </div>
-    );
+    </div>
+  );
 }
  
 export default CreateCourse;
