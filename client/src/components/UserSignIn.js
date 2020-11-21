@@ -1,44 +1,62 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 
-const UserSignIn = () => {
+//Components
+import Header from './Header';
+
+const UserSignIn = ({ history }) => {
+
+  const [user, setUser] = useState({ emailAddress:"", password:"" });
+
+  //Handlers
+  const handleSubmit =e => {
+    e.preventDefault();
+    // axios.get("http://localhost:5000/users", user)
+    //   .then (response => console.log(response))
+    //   .catch(err => console.log("There was an error finding the user", err))
+    alert("Looking for user")
+  }
+
+  const handleChange = e => {
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const cancel = e => {
+    e.preventDefault();
+    history.push("/");
+  }
+
     return (
       <div>
-        <div className="header">
-          <div className="bounds">
-            <h1 className="header--logo">Courses</h1>
-            <nav>
-              <a className="signup" href="sign-up.html">
-                Sign Up
-              </a>
-              <a className="signin" href="sign-in.html">
-                Sign In
-              </a>
-            </nav>
-          </div>
-        </div>
+        <Header />
         <div className="bounds">
           <div className="grid-33 centered signin">
             <h1>Sign In</h1>
             <div>
-              <form>
+              <form onSubmit = {handleSubmit}>
                 <div>
                   <input
+                    onChange = {handleChange}
                     id="emailAddress"
                     name="emailAddress"
                     type="text"
                     className=""
                     placeholder="Email Address"
-                    value=""
+                    value= {user.emailAddress}
                   />
                 </div>
                 <div>
                   <input
+                    onChange = {handleChange}
                     id="password"
                     name="password"
                     type="password"
                     className=""
                     placeholder="Password"
-                    value=""
+                    value= {user.password}
                   />
                 </div>
                 <div className="grid-100 pad-bottom">
@@ -47,7 +65,7 @@ const UserSignIn = () => {
                   </button>
                   <button
                     className="button button-secondary"
-                    onclick="event.preventDefault(); location.href='index.html';"
+                    onClick= {cancel}
                   >
                     Cancel
                   </button>

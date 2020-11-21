@@ -14,22 +14,26 @@ const CreateCourse = ({ history }) => {
 
   //Handlers
   const handleChange = e => {
+
     setNewCourse({
       ...newCourse,
       [e.target.name]: e.target.value
     })
+    
   }
 
   const handleSubmit = e => {
-    e.preveventDefault();
-    alert("Form submited")
-    // axios.post("http://localhost:5000/courses")
+
+    e.preventDefault();
+    axios.post("http://localhost:5000/courses",newCourse)
+      .then(response => console.log(response))
+      .catch(err => console.log("There was an error creating the user", err))
 
   };
 
 
   const cancel = e => {
-    e.preveventDefault();
+    e.preventDefault();
     history.push("/");
   }
 

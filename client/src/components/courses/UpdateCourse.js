@@ -33,7 +33,9 @@ const UpdateCourse = ({ match, history }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    // axios.put(`http://localhost/5000/api/courses/${id}`);
+    axios.put(`http://localhost/5000/api/courses/${id}`, updatedCourse)
+      .then(response => console.log(response))
+      .catch(err => console.log("There was an error updating the course", err))
   }
 
   const cancel = e => {
