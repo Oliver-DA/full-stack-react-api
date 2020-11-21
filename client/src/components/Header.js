@@ -14,7 +14,7 @@ const Header = () => {
 
             {authUser ? (
               <>
-                <span>Welcome, {authUser.firstName}</span>
+                <span>Welcome, {authUser.firstName} {authUser.lastName}</span>
                 <Link to="/signout">SignOut</Link>
               </>
             ) : (

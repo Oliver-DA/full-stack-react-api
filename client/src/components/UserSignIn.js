@@ -17,8 +17,9 @@ const UserSignIn = ({ history, location }) => {
     
     signIn(emailAddress, password)
       .then(response => {
+        console.log(response)
         if (response.data.user !== null) {
-          history.push(from)
+          return history.push(from)
         }
       })
       .catch(err => console.log(err))

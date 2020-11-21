@@ -21,12 +21,13 @@ export const Provider = ({ children }) => {
 
             if (response.status === 200) {
                 setUser(response.data.user);
-                Cookies.set("authenticatedUser", JSON.stringify(response.data.user), { expires: 1 });   
+                Cookies.set("authenticatedUser", JSON.stringify(response.data.user), { expires: 1 });
+                Cookies.set("userCredentials", encodedCredentials, { expires: 1})   
                 } else {
                 setUser(null);
             }
 
-
+        
         return response
     };
 
@@ -40,7 +41,7 @@ export const Provider = ({ children }) => {
         <Context.Provider value={{
             signIn,
             signOut,
-            authUser
+            authUser,
         }}>
             {children}
         </Context.Provider>

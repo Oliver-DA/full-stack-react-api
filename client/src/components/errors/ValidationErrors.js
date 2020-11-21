@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ValidationErros = ({ errors }) => {
+const ValidationErrors = ({ errors }) => {
 
     return (
       <div>
@@ -16,4 +16,4 @@ const ValidationErros = ({ errors }) => {
     );
 }
  
-export default ValidationErros;
+export default ValidationErrors;

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 //Components  
 import Header from './Header';
-import ValidationErrors from './errors/ValidationErros';
+import ValidationErrors from './errors/ValidationErrors';
 
 const UserSignUp = ({ history }) => {
 

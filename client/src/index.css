@@ -696,6 +696,10 @@ input:focus {
   -o-transition: background 0.2s;
   transition: background 0.2s;
 }
+
+button:hover {
+  cursor: pointer;
+}
 /* line 520, ../sass/global.sass */
 .button:focus {
   outline: none;

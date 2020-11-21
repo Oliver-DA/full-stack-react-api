@@ -1,17 +1,28 @@
-import React, { useState }from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
+import { Context } from '../Context';
+import { useHistory } from "react-router-dom";
+import Cookies from 'js-cookie';
 
 //Components
 import Header from '../Header';
+import ValidationErrors from '../errors/ValidationErrors';
 
-const CreateCourse = ({ history }) => {
+const CreateCourse = () => {
+  let history = useHistory()
+
+  const { authUser } = useContext(Context);
+  const userCredentials = Cookies.get("userCredentials");
 
   const [newCourse, setNewCourse] = useState({
     title:"",
     description:"",
     estimatedTime:"",
-    materialsNeeded:""
+    materialsNeeded:"",
+    userId:authUser.id
   })
+
+  const [errors, setErrors] = useState(null);
 
   //Handlers
   const handleChange = e => {
@@ -23,18 +34,24 @@ const CreateCourse = ({ history }) => {
     
   }
 
-  const handleSubmit = e => {
+  const handleSubmit = async (e) => {
+
+    const options = {
+        headers: {
+            Authorization:`Basic ${`${userCredentials}`}`
+        }
+    }
 
     e.preventDefault();
-    axios.post("http://localhost:5000/courses",newCourse)
-      .then(response => console.log(response))
-      .catch(err => console.log("There was an error creating the user", err))
-
+    await axios.post("http://localhost:5000/api/courses", newCourse, options)
+      .catch(err => console.log("There was an error creating the user",err.response,setErrors(err.response.data.errors)))
+    
+    history.push("/")
   };
-
 
   const cancel = e => {
     e.preventDefault();
+    history.push("/")
   }
 
   return (
@@ -43,15 +60,7 @@ const CreateCourse = ({ history }) => {
       <div className="bounds course--detail">
         <h1>Create Course</h1>
         <div>
-          {/* <div>
-            <h2 className="validation--errors--label">Validation errors</h2>
-            <div className="validation-errors">
-              <ul>
-                <li>Please provide a value for "Title"</li>
-                <li>Please provide a value for "Description"</li>
-              </ul>
-            </div>
-          </div> */}
+          { errors && <ValidationErrors errors = {errors} /> }
           <form onSubmit = {handleSubmit}>
             <div className="grid-66">
               <div className="course--header">
