@@ -140,6 +140,7 @@ ol {
 /* line 144, ../sass/reset.sass */
 li {
   display: list-item;
+  padding: 5px 0;
 }
 
 /* line 151, ../sass/reset.sass */

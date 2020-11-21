@@ -3,13 +3,13 @@ import { Redirect, Route } from 'react-router-dom';
 import { Context } from '../Context'
 
 const PrivateRoute = ({ component:Component, ...rest}) => {
-    const { user } = useContext(Context)
+    const { authUser } = useContext(Context)
 
     return (
         <Route
         {...rest}
         render = { ({props, location}) => 
-        user
+        authUser
         ? <Component {...props} />
         :<Redirect to ={{
             pathname: "/signin",

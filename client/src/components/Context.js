@@ -6,7 +6,7 @@ export const Context = React.createContext();
 
 export const Provider = ({ children }) => {
 
-    const [user, setUser] = useState(Cookies.getJSON("authenticatedUser") || null);
+    const [authUser, setUser] = useState(Cookies.getJSON("authenticatedUser") || "");
     
     const signIn = async (emailAddress, password) => {
 
@@ -17,31 +17,30 @@ export const Provider = ({ children }) => {
             }
         }
 
-        await axios.get("http://localhost:5000/api/users", options)
-            .then(response => {
-                if (response.status === 200) {
-                    console.log(response.data.user)
-                    setUser(response.data.user);
-                    Cookies.set("authenticatedUser", JSON.stringify(response.data.user), { expires: 1 });   
-                 } else {
-                    setUser(null)
-            }})
-            .catch(err => console.log("There was an error authenticating the user", err)) 
-            .finally(() => console.log(Cookies.get("authenticatedUser")))
+        const response = await axios.get("http://localhost:5000/api/users", options)
 
-        return user
+            if (response.status === 200) {
+                setUser(response.data.user);
+                Cookies.set("authenticatedUser", JSON.stringify(response.data.user), { expires: 1 });   
+                } else {
+                setUser(null);
+            }
+
+
+        return response
     };
 
     const signOut = () => {
         Cookies.remove("authenticatedUser");
-        setUser(null);
+        setUser("");
+        return
     }
 
     return(
         <Context.Provider value={{
             signIn,
             signOut,
-            user
+            authUser
         }}>
             {children}
         </Context.Provider>

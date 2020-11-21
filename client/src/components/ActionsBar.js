@@ -4,14 +4,14 @@ import { Context } from './Context';
 
 const ActionsBar = ({ id, course }) => {
   const { userId } = course;
-  const { user } = useContext(Context);
+  const { authUser } = useContext(Context);
 
     return (
       <div className="actions--bar">
         <div className="bounds">
           <div className="grid-100">
 
-            {user.id == userId? (
+            {authUser.id === userId && authUser? (
               <span>
                 <Link className="button" to={`/courses/${id}/update`}>
                   Update Course

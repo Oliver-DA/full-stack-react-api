@@ -35,7 +35,6 @@ const CreateCourse = ({ history }) => {
 
   const cancel = e => {
     e.preventDefault();
-    history.push("/");
   }
 
   return (

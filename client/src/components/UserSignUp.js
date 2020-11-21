@@ -3,6 +3,7 @@ import axios from 'axios';
 
 //Components  
 import Header from './Header';
+import ValidationErrors from './errors/ValidationErros';
 
 const UserSignUp = ({ history }) => {
 
@@ -14,12 +15,14 @@ const UserSignUp = ({ history }) => {
     confirmPassword:""
   })
 
+  const [errors, setErrors] = useState(null);
+
   //handlers
   const handleSubmit = e => {
     e.preventDefault();
     axios.post("http://localhost:5000/api/users", user)
       .then(response => console.log(response))
-      .catch(err => console.log("There was an error creating the user", err.statusCode))
+      .catch(err => console.log("There was an error creating the user", setErrors(err.response.data.errors)))
 
   }
   const handleChange = e => {
@@ -40,6 +43,7 @@ const UserSignUp = ({ history }) => {
         <div className="bounds">
           <div className="grid-33 centered signin">
             <h1>Sign Up</h1>
+            { errors && <ValidationErrors errors = {errors} /> }
             <div>
               <form onSubmit = {handleSubmit}>
                 <div>

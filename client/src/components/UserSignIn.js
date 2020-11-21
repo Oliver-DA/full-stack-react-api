@@ -4,7 +4,7 @@ import { Context } from './Context';
 //Components
 import Header from './Header';
 
-const UserSignIn = ({ history }) => {
+const UserSignIn = ({ history, location }) => {
 
   const [user, setUser] = useState({ emailAddress:"", password:"" });
   const { emailAddress, password } = user;
@@ -13,7 +13,15 @@ const UserSignIn = ({ history }) => {
   //Handlers
   const handleSubmit = e => {
     e.preventDefault();
-    signIn(emailAddress, password);
+    const { from } = location.state || { from: { pathname: '/signup' } };
+    
+    signIn(emailAddress, password)
+      .then(response => {
+        if (response.data.user !== null) {
+          history.push(from)
+        }
+      })
+      .catch(err => console.log(err))
   }
 
   const handleChange = e => {
