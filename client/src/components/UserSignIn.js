@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useContext } from 'react';
+import { Context } from './Context';
 
 //Components
 import Header from './Header';
@@ -7,14 +7,13 @@ import Header from './Header';
 const UserSignIn = ({ history }) => {
 
   const [user, setUser] = useState({ emailAddress:"", password:"" });
+  const { emailAddress, password } = user;
+  const { signIn } = useContext(Context);
 
   //Handlers
-  const handleSubmit =e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    // axios.get("http://localhost:5000/users", user)
-    //   .then (response => console.log(response))
-    //   .catch(err => console.log("There was an error finding the user", err))
-    alert("Looking for user")
+    signIn(emailAddress, password);
   }
 
   const handleChange = e => {

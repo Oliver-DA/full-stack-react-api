@@ -24,7 +24,7 @@ const getOneCourse = async (req, res) => {
         where: { id },
         include: {
             model: User,
-            attributes: ["firstName", "lastName", "emailAddress"]
+            attributes: ["id", "firstName", "lastName", "emailAddress"]
         },
         attributes: { exclude: ["createdAt", "updatedAt"] }
     });

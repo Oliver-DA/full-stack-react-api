@@ -8,7 +8,7 @@ const getAuthenticatedUser =  async (req, res) => {
         where: {
             emailAddress: req.currentUser.emailAddress
         },
-        attributes: ["firstName", "lastName", "emailAddress"]
+        attributes: ["id", "firstName", "lastName", "emailAddress"]
     })
     res.json({ message:"Access granted", user });
 };
