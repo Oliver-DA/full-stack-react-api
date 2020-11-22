@@ -6,7 +6,7 @@ import ActionsBar from '../ActionsBar';
 import CourseDisplay from './CourseDisplay';
 import Header from '../Header';
 
-const CourseDetail = ({ match }) => {
+const CourseDetail = ({ match, history }) => {
   const { id } = match.params;
 
   const [course, setCourse] = useState('');
@@ -17,7 +17,14 @@ const CourseDetail = ({ match }) => {
 
       await axios.get(`http://localhost:5000/api/courses/${id}`)
         .then(response => setCourse(response.data))
-        .catch(err => console.log("There was an error fetchin the data", err))
+        .catch(err => {
+          if ( err.response.status === 404 ) {
+            return history.push("/notfound")
+          }
+          else if (err.response.status === 500) {
+            return history.push("/error")
+          }
+        })
     }
 
     fetchCourse();

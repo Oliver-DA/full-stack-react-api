@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 
 const ActionsBar = ({ id, course }) => {
   
-  const history = useHistory()
+  const history = useHistory();
   const { userId } = course;
   const { authUser } = useContext(Context);
   const userCredentials = Cookies.get("userCredentials");
@@ -16,7 +16,7 @@ const ActionsBar = ({ id, course }) => {
       headers: {
         Authorization:`Basic ${`${userCredentials}`}`
       }
-    }
+    };
 
     await axios.delete(`http://localhost:5000/api/courses/${id}`, options)
       .then(response => console.log(response))
@@ -25,33 +25,33 @@ const ActionsBar = ({ id, course }) => {
     history.push("/")
   }
 
-    return (
-      <div className="actions--bar">
-        <div className="bounds">
-          <div className="grid-100">
+  return (
+    <div className="actions--bar">
+      <div className="bounds">
+        <div className="grid-100">
 
-            {authUser.id === userId && authUser? (
-              <span>
-                <Link className="button" to={`/courses/${id}/update`}>
-                  Update Course
-                </Link>
+          {authUser.id === userId && authUser? (
+            <span>
+              <Link className="button" to={`/courses/${id}/update`}>
+                Update Course
+              </Link>
 
-                <button className = "button" onClick = {handleDelete}>Delete Course</button>
+              <button className = "button" onClick = {handleDelete}>Delete Course</button>
 
-                <Link className="button button-secondary" to="/">
-                  Return to List
-                </Link>
-              </span>
-            ) : (
               <Link className="button button-secondary" to="/">
                 Return to List
               </Link>
-            )}
+            </span>
+          ) : (
+            <Link className="button button-secondary" to="/">
+              Return to List
+            </Link>
+          )}
 
-          </div>
         </div>
       </div>
-    );
+    </div>
+  );
 }
  
 export default ActionsBar;

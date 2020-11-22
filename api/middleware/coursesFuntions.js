@@ -18,7 +18,6 @@ const getAllCourses = async (req, res) => {
 
 //Returns a especific course
 const getOneCourse = async (req, res) => {
-
     const { id } = req.params
     const course = await Course.findOne({
         where: { id },

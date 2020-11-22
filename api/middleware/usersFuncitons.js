@@ -3,7 +3,6 @@ const bcrypt = require("bcryptjs");
 
 //Returns the current authenticated user
 const getAuthenticatedUser =  async (req, res) => {
-
     const user = await User.findOne({
         where: {
             emailAddress: req.currentUser.emailAddress

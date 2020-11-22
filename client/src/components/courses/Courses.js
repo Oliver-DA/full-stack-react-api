@@ -6,7 +6,7 @@ import CourseCard from './CourseCard';
 import CreateCourseButton from './CreateCourseButton';
 import Header from "../Header";
 
-const Courses = () => {
+const Courses = ({ history }) => {
 
   const [courses, setCourses] = useState([]);
 
@@ -16,7 +16,7 @@ const Courses = () => {
 
       await axios.get("http://localhost:5000/api/courses")
         .then(response => setCourses(response.data.courses))
-        .catch(err => console.log("There was an error fetching the data", err))
+        .catch(err => err.response && err.response.status === 500 ? history.push("/error"): null)
     };
     
     fetchCourses();

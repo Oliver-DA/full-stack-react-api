@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
 
 const CourseDisplay = ({ title, description, estimatedTime, materialsNeeded }) => {
 
@@ -14,7 +15,7 @@ const CourseDisplay = ({ title, description, estimatedTime, materialsNeeded }) =
           </div>
 
           <div className = "course--description">
-            <p>{ description }</p>
+            <ReactMarkdown>{ description }</ReactMarkdown>
           </div>
         </div>
 
@@ -31,8 +32,7 @@ const CourseDisplay = ({ title, description, estimatedTime, materialsNeeded }) =
                   <h4>Materials Needed</h4>
                   <ul>
 
-                  { materialsNeeded
-                  ? materialsNeeded.split("*").slice(1,).map( (material, index) => <li key = {index}>{material}</li>)
+                  { materialsNeeded ?<ReactMarkdown  children = {materialsNeeded} />
                   : "On Hold" }
 
                   </ul>
@@ -46,4 +46,4 @@ const CourseDisplay = ({ title, description, estimatedTime, materialsNeeded }) =
     );
 }
  
-export default CourseDisplay;
+export default CourseDisplay; 

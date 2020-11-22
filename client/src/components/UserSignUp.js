@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 //Components  
@@ -18,23 +19,29 @@ const UserSignUp = ({ history }) => {
   const [errors, setErrors] = useState(null);
 
   //handlers
-  const handleSubmit = e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    axios.post("http://localhost:5000/api/users", user)
-      .then(response => console.log(response))
-      .catch(err => console.log("There was an error creating the user", setErrors(err.response.data.errors)))
 
+    await axios.post("http://localhost:5000/api/users", user)
+      .then(response => response.status === 201 ? history.push("/signin") : null)
+      .catch(err => {
+        if (err.response.status === 500) {
+          return history.push("/error")
+        }
+        setErrors(err.response.data.errors)
+      })
   }
+
   const handleChange = e => {
-    setUser({
+    setUser({ 
       ...user,
       [e.target.name]: e.target.value
     })
   }
 
   const cancel = e => {
-    e.preventDefault()
-    history.push("/")
+    e.preventDefault();
+    history.push("/");
   }
 
     return (
@@ -116,7 +123,7 @@ const UserSignUp = ({ history }) => {
             </div>
             <p>&nbsp;</p>
             <p>
-              Already have a user account? <a href="sign-in.html">Click here</a>{" "}
+              Already have a user account? <Link to = "/signin">Click here</Link>{" "}
               to sign in!
             </p>
           </div>

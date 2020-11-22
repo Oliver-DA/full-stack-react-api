@@ -1,5 +1,6 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useContext} from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import {Context} from '../Context';
 import axios from 'axios';
 import Cookie from 'js-cookie';
 
@@ -10,7 +11,9 @@ import ValidationErrors from '../errors/ValidationErrors';
 const UpdateCourse = () => {
 
   const { id } = useParams();
-  const history = useHistory()
+  const history = useHistory();
+  const {authUser} = useContext(Context);
+  console.log(authUser)
   const userCredentials = Cookie.get("userCredentials")
 
   const [updatedCourse, setUpdatedCourse] = useState("");
@@ -21,13 +24,18 @@ const UpdateCourse = () => {
     const fetchCourse = async () => {
 
       await axios.get(`http://localhost:5000/api/courses/${id}`)
-        .then(response => setUpdatedCourse(response.data))
-        .catch(err => console.log("There was an error fetchin the data", err))
+        .then(response => {
+          if (authUser.id !== response.data.userId) {
+            return history.push("/forbidden");
+          }
+          setUpdatedCourse(response.data)
+        })
+        .catch(err => err.response.status === 404 ? history.push("/notfound") : null )
     }
 
     fetchCourse();
 
-  },[id])
+  }, [id])
 
   //Handlers
   const handleChange = e => {

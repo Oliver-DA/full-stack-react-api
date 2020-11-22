@@ -45,8 +45,12 @@ const CreateCourse = () => {
     e.preventDefault();
     await axios.post("http://localhost:5000/api/courses", newCourse, options)
       .then(() => history.push("/"))
-      .catch(err => console.log("There was an error creating the user",err.response,setErrors(err.response.data.errors)))
-    
+      .catch(err => {
+        if (err.response.status === 500) {
+          return history.push("/error")
+        }
+        setErrors(err.response.data.errors)
+      })
   };
 
   const cancel = e => {

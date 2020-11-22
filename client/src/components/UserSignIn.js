@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { Context } from './Context';
 
 //Components
@@ -13,13 +14,14 @@ const UserSignIn = ({ history, location }) => {
   //Handlers
   const handleSubmit = e => {
     e.preventDefault();
-    const { from } = location.state || { from: { pathname: '/signup' } };
+    const { from } = location.state || { from: { pathname: '/' } };
     
     signIn(emailAddress, password)
       .then(response => {
-        console.log(response)
-        if (response.data.user !== null) {
+        if (response.data.user) {
           return history.push(from)
+        } else {
+          history.push("/error")
         }
       })
       .catch(err => console.log(err))
@@ -82,7 +84,7 @@ const UserSignIn = ({ history, location }) => {
             </div>
             <p>&nbsp;</p>
             <p>
-              Don't have a user account? <a href="sign-up.html">Click here</a>{" "}
+              Don't have a user account? <Link to = "/signup">Click here</Link>{" "}
               to sign up!
             </p>
           </div>

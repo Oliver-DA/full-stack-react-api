@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 //HOC
@@ -12,6 +12,9 @@ import CourseDetail from './courses/CourseDetail';
 import UserSignIn from './UserSignIn';
 import UserSignUp from './UserSignUp';
 import UserSignOut from './UserSignOut';
+import NotFound from './errors/NotFound';
+import Forbidden from './errors/Forbidden';
+import UnhandledError from './errors/UnhandledError';
 
 function App() {
 
@@ -26,6 +29,10 @@ function App() {
         <Route path = "/signin"  component = {UserSignIn} />
         <Route path = "/signup" component = {UserSignUp} />
         <Route path = "/signout" component = {UserSignOut} />
+        <Route path = "/notfound" component = {NotFound} />
+        <Route path = "/forbidden" component = {Forbidden} />
+        <Route path = "/error" component = {UnhandledError} />
+        <Route render  = { () => <NotFound moves = {-1} />} />
       </Switch>
     </Router>
 
