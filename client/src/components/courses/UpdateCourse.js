@@ -1,14 +1,20 @@
 import React, { useState, useEffect} from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import axios from 'axios';
+import Cookie from 'js-cookie';
 
 //Components
 import Header from '../Header';
+import ValidationErrors from '../errors/ValidationErrors';
 
-const UpdateCourse = ({ match, history }) => {
+const UpdateCourse = () => {
 
-  const { id } = match.params;
+  const { id } = useParams();
+  const history = useHistory()
+  const userCredentials = Cookie.get("userCredentials")
 
-  const [updatedCourse, setUpdatedCourse] = useState('');
+  const [updatedCourse, setUpdatedCourse] = useState("");
+  const [errors, setErrors] = useState("");
 
   useEffect(() => {
 
@@ -31,11 +37,18 @@ const UpdateCourse = ({ match, history }) => {
     })
   }
 
-  const handleSubmit = e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    axios.put(`http://localhost/5000/api/courses/${id}`, updatedCourse)
+
+    const options = {
+      headers: {
+        Authorization:`Basic ${`${userCredentials}`}`
+      }
+    }
+    await axios.put(`http://localhost:5000/api/courses/${id}`, updatedCourse, options)
       .then(response => console.log(response))
-      .catch(err => console.log("There was an error updating the course", err))
+      .then(() => history.push(`/courses/${id}`))
+      .catch(err => console.log("There was an error updating the course", setErrors(err.response.data.errors)))
   }
 
   const cancel = e => {
@@ -50,6 +63,7 @@ const UpdateCourse = ({ match, history }) => {
 
       <div className="bounds course--detail">
         <h1>Update Course</h1>
+        { errors && <ValidationErrors errors = {errors} />}
         <div>
           <form onSubmit = {handleSubmit}>
             <div className="grid-66">
