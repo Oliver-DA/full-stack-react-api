@@ -30,7 +30,7 @@ const ActionsBar = ({ id, course }) => {
       <div className="bounds">
         <div className="grid-100">
 
-          {authUser.id === userId && authUser? (
+          { authUser && authUser.id === userId ? (
             <span>
               <Link className="button" to={`/courses/${id}/update`}>
                 Update Course

@@ -7,6 +7,7 @@ export const Context = React.createContext();
 export const Provider = ({ children }) => {
 
     const [authUser, setUser] = useState(Cookies.getJSON("authenticatedUser") || "");
+    const [userCredentials, setUserCredentials] = useState(Cookies.get("userCredentials") || "")
     
     const signIn = async (emailAddress, password) => {
 
@@ -16,6 +17,8 @@ export const Provider = ({ children }) => {
                 Authorization:`Basic ${encodedCredentials}`
             }
         }
+
+        setUserCredentials(encodedCredentials)
 
         const response = await axios.get("http://localhost:5000/api/users", options)
 
@@ -33,15 +36,17 @@ export const Provider = ({ children }) => {
 
     const signOut = () => {
         Cookies.remove("authenticatedUser");
-        setUser("");
-        return
+        Cookies.remove("userCredentials")
+        setUser(null);
     }
+
 
     return(
         <Context.Provider value={{
             signIn,
             signOut,
             authUser,
+            userCredentials
         }}>
             {children}
         </Context.Provider>

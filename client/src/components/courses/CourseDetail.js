@@ -19,17 +19,17 @@ const CourseDetail = ({ match, history }) => {
         .then(response => setCourse(response.data))
         .catch(err => {
           if ( err.response.status === 404 ) {
-            return history.push("/notfound")
+            return history.push("/notfound");
           }
           else if (err.response.status === 500) {
-            return history.push("/error")
+            return history.push("/error");
           }
         })
     }
 
     fetchCourse();
 
-  },[id])
+  }, [id, history])
 
     return (
       <>

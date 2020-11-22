@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { Context } from '../Context';
 import { useHistory } from "react-router-dom";
-import Cookies from 'js-cookie';
 
 //Components
 import Header from '../Header';
@@ -11,8 +10,7 @@ import ValidationErrors from '../errors/ValidationErrors';
 const CreateCourse = () => {
   let history = useHistory()
 
-  const { authUser } = useContext(Context);
-  const userCredentials = Cookies.get("userCredentials");
+  const { authUser, userCredentials } = useContext(Context);
 
   const [newCourse, setNewCourse] = useState({
     title:"",
@@ -118,8 +116,7 @@ const CreateCourse = () => {
                       <textarea
                         onChange = {handleChange}
                         id="materialsNeeded"
-                        name="materialsNeeded"
-                        className=""
+                        name="materialsNeeded"  
                         placeholder="List materials..."
                         value = {newCourse.materialsNeeded}
                       ></textarea>

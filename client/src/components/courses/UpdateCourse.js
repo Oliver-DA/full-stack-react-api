@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext} from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import {Context} from '../Context';
 import axios from 'axios';
-import Cookie from 'js-cookie';
 
 //Components
 import Header from '../Header';
@@ -12,18 +11,19 @@ const UpdateCourse = () => {
 
   const { id } = useParams();
   const history = useHistory();
-  const {authUser} = useContext(Context);
-  console.log(authUser)
-  const userCredentials = Cookie.get("userCredentials")
+  const {authUser, userCredentials} = useContext(Context);
 
-  const [updatedCourse, setUpdatedCourse] = useState("");
+  const [updatedCourse, setUpdatedCourse] = useState({
+    title:"",
+    description:"",
+    estimatedTime:"",
+    materialsNeeded:""
+  });
   const [errors, setErrors] = useState("");
 
   useEffect(() => {
 
-    const fetchCourse = async () => {
-
-      await axios.get(`http://localhost:5000/api/courses/${id}`)
+       axios.get(`http://localhost:5000/api/courses/${id}`)
         .then(response => {
           if (authUser.id !== response.data.userId) {
             return history.push("/forbidden");
@@ -31,11 +31,8 @@ const UpdateCourse = () => {
           setUpdatedCourse(response.data)
         })
         .catch(err => err.response.status === 404 ? history.push("/notfound") : null )
-    }
 
-    fetchCourse();
-
-  }, [id])
+  }, [id, authUser.id, history])
 
   //Handlers
   const handleChange = e => {

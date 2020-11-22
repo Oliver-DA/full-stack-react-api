@@ -21,7 +21,7 @@ const Courses = ({ history }) => {
     
     fetchCourses();
 
-  }, []);
+  }, [history]);
 
     return (
       <>

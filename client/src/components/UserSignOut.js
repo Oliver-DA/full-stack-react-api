@@ -8,9 +8,7 @@ const UserSignOut = () => {
 
     signOut();
 
-    return(
-    <Redirect to = "/" />
-    )
+    return <Redirect to = "/" />
 
 }
  
