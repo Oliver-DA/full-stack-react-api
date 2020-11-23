@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { Context } from '../Context';
 import axios from 'axios';
 
 //Components
@@ -10,32 +11,36 @@ const Courses = ({ history }) => {
 
   const [courses, setCourses] = useState([]);
 
+  //Context 
+  const { coursesUrl } = useContext(Context);
+
   useEffect(() => {
 
     const fetchCourses = async () => {
 
-      await axios.get("http://localhost:5000/api/courses")
+      await axios.get(coursesUrl)
         .then(response => setCourses(response.data.courses))
-        .catch(err => err.response && err.response.status === 500 ? history.push("/error"): null)
+        .catch(err => err.response && err.response.status === 500 ? history.push("/error"): null);
+
     };
     
     fetchCourses();
 
-  }, [history]);
+  }, [history, coursesUrl]);
 
     return (
       <>
-        <Header />
 
+        <Header />
         <div className="bounds">
           { courses.map( (course, index) => (
             <CourseCard
             {...course}
             key = {index}/>
           )) }
-
           <CreateCourseButton />
         </div>
+
       </>
     );
 }

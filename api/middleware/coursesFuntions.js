@@ -4,7 +4,6 @@ const { updateOrdeleteCourse } = require('./helperFunctions');
 
 //Return a list of all the courses an user that own's them
 const getAllCourses = async (req, res) => {
-
     const courses = await Course.findAll({
         include: {
             model: User,

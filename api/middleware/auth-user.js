@@ -26,7 +26,7 @@ exports.authenticateUser = async (req, res, next) => {
             }
 
         } else {
-            message = "Authentication falied";
+            message = "Please provide your username and password *";
         }
 
     } else {

@@ -6,54 +6,54 @@ import { useHistory } from "react-router-dom";
 //Components
 import Header from '../Header';
 import ValidationErrors from '../errors/ValidationErrors';
+import CourseForm from './CourseForm';
 
 const CreateCourse = () => {
-  let history = useHistory()
+  let history = useHistory();
 
-  const { authUser, userCredentials } = useContext(Context);
+  //Context
+  const {
+    authUser,
+    coursesUrl,
+    authHeader
+  } = useContext(Context);
 
+  //State
   const [newCourse, setNewCourse] = useState({
     title:"",
     description:"",
     estimatedTime:"",
     materialsNeeded:"",
     userId:authUser.id
-  })
+  });
 
   const [errors, setErrors] = useState(null);
 
   //Handlers
   const handleChange = e => {
-
     setNewCourse({
       ...newCourse,
       [e.target.name]: e.target.value
-    })
-    
+    });
   }
 
   const handleSubmit = async (e) => {
-
-    const options = {
-        headers: {
-            Authorization:`Basic ${`${userCredentials}`}`
-        }
-    }
-
     e.preventDefault();
-    await axios.post("http://localhost:5000/api/courses", newCourse, options)
+
+    await axios.post(coursesUrl, newCourse, authHeader)
       .then(() => history.push("/"))
       .catch(err => {
         if (err.response.status === 500) {
           return history.push("/error")
         }
         setErrors(err.response.data.errors)
-      })
+      });
+
   };
 
   const cancel = e => {
     e.preventDefault();
-    history.push("/")
+    history.push("/");
   }
 
   return (
@@ -62,79 +62,14 @@ const CreateCourse = () => {
       <div className="bounds course--detail">
         <h1>Create Course</h1>
         <div>
+
           { errors && <ValidationErrors errors = {errors} /> }
-          <form onSubmit = {handleSubmit}>
-            <div className="grid-66">
-              <div className="course--header">
-                <h4 className="course--label">Course</h4>
-                <div>
-                  <input
-                    onChange = {handleChange}
-                    id="title"
-                    name="title"
-                    type="text"
-                    className="input-title course--title--input"
-                    placeholder="Course title..."
-                    value= {newCourse.title}
-                  />
-                </div>
-                <p>By Joe Smith</p>
-              </div>
-              <div className="course--description">
-                <div>
-                  <textarea
-                    onChange = {handleChange}
-                    id="description"
-                    name="description"
-                    className=""
-                    value = {newCourse.description}
-                    placeholder="Course description..."
-                  ></textarea>
-                </div>
-              </div>
-            </div>
-            <div className="grid-25 grid-right">
-              <div className="course--stats">
-                <ul className="course--stats--list">
-                  <li className="course--stats--list--item">
-                    <h4>Estimated Time</h4>
-                    <div>
-                      <input
-                        onChange = {handleChange}
-                        id="estimatedTime"
-                        name="estimatedTime"
-                        type="text"
-                        className="course--time--input"
-                        placeholder="Hours"
-                        value= {newCourse.estimatedTime}
-                      />
-                    </div>
-                  </li>
-                  <li className="course--stats--list--item">
-                    <h4>Materials Needed</h4>
-                    <div>
-                      <textarea
-                        onChange = {handleChange}
-                        id="materialsNeeded"
-                        name="materialsNeeded"  
-                        placeholder="List materials..."
-                        value = {newCourse.materialsNeeded}
-                      ></textarea>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="grid-100 pad-bottom">
-              <button className="button" type="submit">
-                Create Course
-              </button>
-              <button
-              className="button button-secondary"
-              onClick = {cancel}>
-              Cancel</button>
-            </div>
-          </form>
+          <CourseForm
+          course = {newCourse}
+          handleChange = {handleChange}
+          handleSubmit = {handleSubmit}
+          cancel = {cancel} />
+      
         </div>
       </div>
     </div>

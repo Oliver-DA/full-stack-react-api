@@ -8,6 +8,11 @@ export const Provider = ({ children }) => {
 
     const [authUser, setUser] = useState(Cookies.getJSON("authenticatedUser") || "");
     const [userCredentials, setUserCredentials] = useState(Cookies.get("userCredentials") || "")
+
+    //Urls
+    const coursesUrl = "http://localhost:5000/api/courses/";
+    const usersUrl = "http://localhost:5000/api/users/";
+
     
     const signIn = async (emailAddress, password) => {
 
@@ -20,7 +25,7 @@ export const Provider = ({ children }) => {
 
         setUserCredentials(encodedCredentials)
 
-        const response = await axios.get("http://localhost:5000/api/users", options)
+        const response = await axios.get(usersUrl, options)
 
             if (response.status === 200) {
                 setUser(response.data.user);
@@ -36,17 +41,31 @@ export const Provider = ({ children }) => {
 
     const signOut = () => {
         Cookies.remove("authenticatedUser");
-        Cookies.remove("userCredentials")
+        Cookies.remove("userCredentials");
         setUser(null);
     }
 
+    const cancel = (history) => {
+        history.push("/");
+    }
+
+    //Auth Header
+    const authHeader = {
+        headers: {
+            Authorization:`Basic ${userCredentials}`
+        }
+    };
 
     return(
         <Context.Provider value={{
             signIn,
             signOut,
             authUser,
-            userCredentials
+            userCredentials,
+            coursesUrl,
+            usersUrl,
+            authHeader,
+            cancel
         }}>
             {children}
         </Context.Provider>

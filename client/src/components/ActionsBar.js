@@ -2,27 +2,24 @@ import React, { useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Context } from './Context';
 import axios from 'axios';
-import Cookies from 'js-cookie';
 
 const ActionsBar = ({ id, course }) => {
   
   const history = useHistory();
   const { userId } = course;
-  const { authUser } = useContext(Context);
-  const userCredentials = Cookies.get("userCredentials");
 
+  //Context
+  const {
+    authUser,
+    authHeader,
+    coursesUrl
+  } = useContext(Context);
+
+  //Handlers
   const handleDelete = async () => {
-    const options = {
-      headers: {
-        Authorization:`Basic ${`${userCredentials}`}`
-      }
-    };
-
-    await axios.delete(`http://localhost:5000/api/courses/${id}`, options)
-      .then(response => console.log(response))
-      .catch(err => console.log("There was an error deleting the course",err.response))
-
-    history.push("/")
+    await axios.delete(coursesUrl + id, authHeader)
+      .then(() => history.push("/"))
+      .catch(err => console.log("There was an error deleting the course",err.response));
   }
 
   return (

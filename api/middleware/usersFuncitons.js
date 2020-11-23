@@ -23,7 +23,7 @@ const createUser = async (req, res) => {
         res.status(400).json({ message: "This email address is already in use" });
 
     } else {
-        req.body.password = req.body.password ? bcrypt.hashSync(req.body.password, 10): null;
+        req.body.password = req.body.password ? bcrypt.hashSync(req.body.password, 10): "";
         await User.create(req.body)
         res.status(201).location("/").end();
     }
