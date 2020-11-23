@@ -16,7 +16,7 @@ const UserSignUp = ({ history }) => {
     lastName:'',
     emailAddress:"",
     password:"",
-    confirmPassword:""
+    confirmedPassword:""
   })
 
   const [errors, setErrors] = useState(null);
@@ -40,6 +40,7 @@ const UserSignUp = ({ history }) => {
 
           if (err.response.data.errors) {
             setErrors(err.response.data.errors);
+            setError(null);
 
           } else {
             setError(err.response.data.message);

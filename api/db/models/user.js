@@ -1,5 +1,5 @@
 const { DataTypes, Model } = require("sequelize");
-
+const bcrypt = require("bcryptjs");
 
 module.exports = (sequelize) => {
 
@@ -46,9 +46,6 @@ module.exports = (sequelize) => {
             allowNull: false,
 
             validate: {
-                notEmpty: {
-                    msg: "Please provide a value for email address"
-                },
                 isEmail: {
                     msg: "Please provide a valid email address"
                 },
@@ -68,6 +65,25 @@ module.exports = (sequelize) => {
                 },
                 notNull: {
                     msg: "The value for password can not be null"
+                }
+            }
+        },
+
+        confirmedPassword: {
+            type: DataTypes.VIRTUAL,
+            allowNull: false,
+
+            set(val) {
+
+                if(bcrypt.compareSync(val,this.password)) {
+                    const hashedPassword = bcrypt.hashSync(val, 10);
+                    this.setDataValue('confirmedPassword', hashedPassword);
+                }
+            },
+
+            validate: {
+                notNull: {
+                    msg: "Both passwords mush match"
                 }
             }
         }

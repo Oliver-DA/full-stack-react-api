@@ -53,11 +53,11 @@ const UserSignUpForm = ({ handleChange, handleSubmit, user, cancel}) => {
           <input
             onChange={handleChange}
             id="confirmPassword"
-            name="confirmPassword"
+            name="confirmedPassword"
             type="password"
             className=""
             placeholder="Confirm Password"
-            value={user.confirmPassword}
+            value={user.confirmedPassword}
           />
         </div>
         <div className="grid-100 pad-bottom">
