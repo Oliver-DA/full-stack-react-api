@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CreateCourseForm = ({ handleChange, handleSubmit, course, cancel }) => {
+const CreateCourseForm = ({ handleChange, handleSubmit, course, cancel, currentForm }) => {
 
   return (
 
@@ -68,7 +68,7 @@ const CreateCourseForm = ({ handleChange, handleSubmit, course, cancel }) => {
       </div>
       <div className="grid-100 pad-bottom">
         <button className="button" type="submit">
-          Create Course
+          { currentForm }
         </button>
         <button className="button button-secondary" onClick={cancel}>
           Cancel

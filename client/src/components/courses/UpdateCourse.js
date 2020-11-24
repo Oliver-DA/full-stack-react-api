@@ -85,7 +85,8 @@ const UpdateCourse = () => {
           updatedCourse = {updatedCourse}
           handleChange = {handleChange}
           handleSubmit = {handleSubmit}
-          cancel = {cancel} />
+          cancel = {cancel}
+          currentForm = "Update Course" />
         </div>
       </div>
     </div>

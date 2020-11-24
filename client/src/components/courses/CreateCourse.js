@@ -71,7 +71,8 @@ const CreateCourse = () => {
           course = {newCourse}
           handleChange = {handleChange}
           handleSubmit = {handleSubmit}
-          cancel = {cancel} />
+          cancel = {cancel}
+          currentForm = "Create Course" />
       
         </div>
       </div>

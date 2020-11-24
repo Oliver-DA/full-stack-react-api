@@ -1,17 +1,14 @@
-import { useContext } from 'react';
+import { useContext, useEffect} from 'react';
 import { Context } from '../Context';
 import { Redirect } from 'react-router-dom';
 
 const UserSignOut = () => {
-
     const { signOut } = useContext(Context);
 
-    signOut();
+    useEffect(() => signOut());
 
     return (
-        <>
-            <Redirect to = "/" />
-        </>
+        <Redirect to = "/" />
     )
 
 }
