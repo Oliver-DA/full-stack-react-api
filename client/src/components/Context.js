@@ -6,8 +6,11 @@ export const Context = React.createContext();
 
 export const Provider = ({ children }) => {
 
+    //Get the Authuser and userCredentials stored in a cookie or asign them the value '';
+    //userCredentials will store email and password on a cookie to use it through the app
+    //for user validation on private routes.
     const [authUser, setUser] = useState(Cookies.getJSON("authenticatedUser") || "");
-    const [userCredentials, setUserCredentials] = useState(Cookies.get("userCredentials") || "")
+    const [userCredentials, setUserCredentials] = useState(Cookies.get("userCredentials") || "");
 
     //Urls
     const coursesUrl = "http://localhost:5000/api/courses/";
@@ -15,15 +18,15 @@ export const Provider = ({ children }) => {
 
     
     const signIn = async (emailAddress, password) => {
-
+        //btoa creates a Base64-encoded ASCII string
         const encodedCredentials = btoa(`${emailAddress}:${password}`);
         const options = {
             headers: {
                 Authorization:`Basic ${encodedCredentials}`
             }
-        }
+        };
 
-        setUserCredentials(encodedCredentials)
+        setUserCredentials(encodedCredentials);
 
         const response = await axios.get(usersUrl, options)
 

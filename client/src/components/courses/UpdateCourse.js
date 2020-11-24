@@ -9,6 +9,8 @@ import ValidationErrors from '../errors/ValidationErrors';
 import CourseForm from './CourseForm';
 
 const UpdateCourse = () => {
+  //Use history is a hook from 'react-router' to get acces to the use instance.
+  //Use Params returns an object of key/value pairs of URL parameters.
   const { id } = useParams();
   const history = useHistory();
 
@@ -28,7 +30,7 @@ const UpdateCourse = () => {
   });
 
   const [errors, setErrors] = useState("");
-
+  //First get the course we want to update.
   useEffect(() => {
 
     const updateCourse = async () => {
@@ -43,7 +45,7 @@ const UpdateCourse = () => {
         .catch(err => err.response.status === 404 ? history.push("/notfound") : null )
     }
 
-    updateCourse()
+    updateCourse();
 
   }, [id, authUser.id, history, coursesUrl])
 
@@ -52,12 +54,13 @@ const UpdateCourse = () => {
     setUpdatedCourse({
       ...updatedCourse,
       [e.target.name]: e.target.value
-    })
+    });
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    //Second send the post request with the updatedCourse
+    //Authheader contains an object with the credentials to allow the post request
     await axios.put(coursesUrl + id, updatedCourse, authHeader)
       .then(() => history.push(`/courses/${id}`))
       .catch(err => setErrors(err.response.data.errors));
@@ -75,6 +78,8 @@ const UpdateCourse = () => {
         <h1>Update Course</h1>
         { errors && <ValidationErrors errors = {errors} />}
         <div>
+          {/* Course form is a component for redering both the create and update course
+          form the only change that needs to be make is the prop course */}
           <CourseForm
           course = {updatedCourse}
           updatedCourse = {updatedCourse}

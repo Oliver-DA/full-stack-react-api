@@ -22,7 +22,7 @@ exports.authenticateUser = async (req, res, next) => {
                 req.currentUser = user
 
             } else {
-                message = "Incorrect password";
+                message = "Incorrect password *";
             }
 
         } else {

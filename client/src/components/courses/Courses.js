@@ -9,6 +9,7 @@ import Header from "../Header";
 
 const Courses = ({ history }) => {
 
+  //State
   const [courses, setCourses] = useState([]);
 
   //Context 

@@ -23,14 +23,17 @@ const UserSignUp = ({ history }) => {
   const [error, setError] = useState(null);
 
   //Context
-  const { usersUrl } = useContext(Context);
+  const {
+    usersUrl,
+    signIn
+  } = useContext(Context);
 
   //handlers
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     await axios.post(usersUrl, user)
-      .then(response => response.status === 201 ? history.push("/signin") : null)
+      .then(response => ( response.status === 201 ) ? ( signIn(user.emailAddress, user.password), history.push("/") ) : null)
       .catch(err => {
 
         if (!err.response || err.response.status === 500) {
@@ -69,6 +72,7 @@ const UserSignUp = ({ history }) => {
         <div className="bounds">
           <div className="grid-33 centered signin">
             <h1>Sign Up</h1>
+
             { errors && <ValidationErrors errors = {errors} /> }
             { error && <p className = "error">{error}</p> }
             <div>
@@ -79,6 +83,7 @@ const UserSignUp = ({ history }) => {
               cancel = {cancel} />
             </div>
             <p>&nbsp;</p>
+            
             <p>
               Already have a user account? <Link to = "/signin">Click here</Link>{" "}
               to sign in!

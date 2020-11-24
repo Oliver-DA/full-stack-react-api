@@ -9,6 +9,7 @@ import ValidationErrors from '../errors/ValidationErrors';
 import CourseForm from './CourseForm';
 
 const CreateCourse = () => {
+  //Use history is a hook from 'react-router' to get acces to the use instance.
   let history = useHistory();
 
   //Context
@@ -39,7 +40,7 @@ const CreateCourse = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    //Authheader contains an object with the credentials to allow the post request
     await axios.post(coursesUrl, newCourse, authHeader)
       .then(() => history.push("/"))
       .catch(err => {
@@ -64,6 +65,8 @@ const CreateCourse = () => {
         <div>
 
           { errors && <ValidationErrors errors = {errors} /> }
+          {/* Course form is a component for redering both the create and update course
+          form the only change that needs to be make is the prop course */}
           <CourseForm
           course = {newCourse}
           handleChange = {handleChange}

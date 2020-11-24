@@ -8,6 +8,7 @@ import CourseDisplay from './CourseDisplay';
 import Header from '../Header';
 
 const CourseDetail = ({ match, history }) => {
+  //match and history are properties given to the components rendered by <Route />
   const { id } = match.params;
 
   //State
@@ -19,7 +20,8 @@ const CourseDetail = ({ match, history }) => {
   useEffect(() => {
 
     const fetchCourse = async () => {
-
+      //This request will get the clicked course from the api 
+      //and populate our state ir order to display it's information
       await axios.get(coursesUrl + id)
         .then(response => setCourse(response.data))
         .catch(err => {
