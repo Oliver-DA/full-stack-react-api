@@ -1,7 +1,16 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 
-const CourseDisplay = ({ title, description, estimatedTime, materialsNeeded }) => {
+const CourseDisplay = ({ course, courseOwner }) => {
+
+  const {
+    title,
+    description,
+    estimatedTime,
+    materialsNeeded,
+  } = course;
+
+  const { firstName, lastName } = courseOwner;
 
   return (
     <div className = "bounds course--detail">
@@ -10,7 +19,7 @@ const CourseDisplay = ({ title, description, estimatedTime, materialsNeeded }) =
         <div className = "course--header">
           <h4 className = "course--label">Course</h4>
           <h3 className = "course--title">{ title }</h3>
-          <p>By J. Smith </p>
+          <p>By {`${firstName} ${lastName}`} </p>
         </div>
 
         <div className = "course--description">

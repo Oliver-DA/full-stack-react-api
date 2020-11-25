@@ -13,6 +13,7 @@ const CourseDetail = ({ match, history }) => {
 
   //State
   const [course, setCourse] = useState('');
+  const [courseOwner, setCourseOwner] = useState('');
 
   //Context
   const { coursesUrl } = useContext(Context);
@@ -23,7 +24,10 @@ const CourseDetail = ({ match, history }) => {
       //This request will get the clicked course from the api 
       //and populate our state ir order to display it's information
       await axios.get(coursesUrl + id)
-        .then(response => setCourse(response.data))
+        .then(response => {
+          setCourse(response.data);
+          setCourseOwner(response.data.User);
+        })
         .catch(err => {
           if (err.response.status === 404) {
             return history.push("/notfound");
@@ -42,7 +46,7 @@ const CourseDetail = ({ match, history }) => {
       <>
         <Header />
         <ActionsBar id = {id} course = {course} />
-        <CourseDisplay {...course} />
+        <CourseDisplay course = {course} courseOwner = {courseOwner} />
       </>
     );
 }
