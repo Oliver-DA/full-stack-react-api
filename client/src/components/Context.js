@@ -13,8 +13,8 @@ export const Provider = ({ children }) => {
     const [userCredentials, setUserCredentials] = useState(Cookies.get("userCredentials") || "");
 
     //Urls
-    const coursesUrl = "http://localhost:5000/api/courses/";
-    const usersUrl = "http://localhost:5000/api/users/";
+    const coursesUrl = "https://rocky-inlet-09868.herokuapp.com/api/courses/";
+    const usersUrl = "https://rocky-inlet-09868.herokuapp.com/api/users/";
 
     
     const signIn = async (emailAddress, password) => {
