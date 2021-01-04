@@ -15,7 +15,7 @@ const coursesRoute = require("./routes/courses");
 // create the Express app.
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: true }));
+app.use(cors());
 
 //Authenticate the conecction for sequelize.
 (async () => {
