@@ -61,6 +61,6 @@ app.use(globalErrorHandler)
 app.set('port', process.env.port || 5000);
 
 // start listening on our port
-const server = app.listen(app.get('port'), () => {
+const server = app.listen(app.get('port'), '0.0.0.0', () => {
   console.log(`Express server is listening on port ${server.address().port}`);
 });
