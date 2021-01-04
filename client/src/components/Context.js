@@ -55,7 +55,7 @@ export const Provider = ({ children }) => {
     //Auth Header
     const authHeader = {
         headers: {
-            Authorization:`Basic ${userCredentials}`
+            Authorization:`Basic ${userCredentials}`,
         }
     };
 
