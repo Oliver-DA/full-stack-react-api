@@ -15,7 +15,7 @@ const coursesRoute = require("./routes/courses");
 // create the Express app.
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: true }));
 
 //Authenticate the conecction for sequelize.
 (async () => {
@@ -58,7 +58,7 @@ app.use(notFoundError)
 app.use(globalErrorHandler)
 
 // set our port
-app.set('port', process.env.PORT || 5000);
+app.set('port', process.env.port || 5000);
 
 // start listening on our port
 const server = app.listen(app.get('port'), () => {
